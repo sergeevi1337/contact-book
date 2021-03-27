@@ -29,4 +29,4 @@ logging:
     com.university.contactbook: DEBUG
 
 upload:
-  path: /home/farallel/Desktop/upload
+  path: C:\Users\farallel\Desktop\upload

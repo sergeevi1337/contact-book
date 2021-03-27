@@ -4,6 +4,7 @@ import com.university.contactbook.entity.Contact;
 import com.university.contactbook.service.ContactService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/contacts")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 public class ContactController {
 
     private final ContactService contactService;
