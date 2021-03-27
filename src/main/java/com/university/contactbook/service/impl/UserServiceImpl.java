@@ -5,6 +5,8 @@ import com.university.contactbook.repository.UserRepository;
 import com.university.contactbook.service.UserService;
 import com.university.contactbook.utils.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,6 +44,11 @@ public class UserServiceImpl implements UserService {
         user.setDeleted(true);
 
         userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsernameAndDeletedFalse(username);
     }
 }
 
