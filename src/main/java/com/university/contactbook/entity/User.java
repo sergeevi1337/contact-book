@@ -1,5 +1,6 @@
 package com.university.contactbook.entity;
 
+import com.university.contactbook.utils.validator.UniqueUsernameConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +9,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -23,9 +28,14 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Обов'язкове поле!")
+    @Size(max = 64, message = "Перевищено максимальну довжину тексту! (64 символа)")
+//    @UniqueUsernameConstraint(message = "Користувач з таким логіном вже існує")
     @Column(name = "username")
     private String username;
 
+    @NotBlank(message = "Обов'язкове поле!")
+    @Size(max = 64, message = "Перевищено максимальну довжину тексту! (64 символа)")
     @Column(name = "password")
     private String password;
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ua"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(~{::meta})}">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+	<div class="content-wrapper">
+        <nav>
+            <h1>Користувачі</h1>
+            <ul>
+                <li><a class="btn btn-primary" th:href="@{/users/add}" role="button"><i class="fas fa-plus"></i>Додати</a></li>
+                <li><a class="btn btn-primary" th:href="@{/contacts}" role="button"><i class="fas fa-address-book"></i>Контакти</a></li>
+                <li>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-sign-out"></i>Вихід</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+		<table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Логін</th>
+                    <th scope="col">Видалити</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td scope="row" th:text="${user.username}"></td>
+                    <td th:if="${#authentication.getPrincipal().getId() != user.id}"><a th:href="@{/users/delete/{id}(id=${user.id})}"><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+	</div>
+</body>
+</html>

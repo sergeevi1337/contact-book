@@ -1,18 +1,23 @@
 package com.university.contactbook.service.impl;
 
+import com.university.contactbook.entity.Role;
 import com.university.contactbook.entity.User;
 import com.university.contactbook.repository.UserRepository;
 import com.university.contactbook.service.UserService;
 import com.university.contactbook.utils.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.String.format;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -21,19 +26,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return (List<User>) userRepository.findAll();
+        return userRepository.findAllByDeletedFalse();
     }
 
     @Override
     public User getUserById(Integer id) {
         return userRepository
                 .findById(id)
-                .get();
-//                .orElseThrow(new NotFoundException(format("User with id '%s' not found", id)));
+                .orElseThrow(() -> new NotFoundException(format("User with id '%s' not found", id)));
     }
 
     @Override
     public User createNewUser(User user) {
+        user.setRoles(Collections.singleton(Role.USER));
+        user.setActive(true);
         return userRepository.save(user);
     }
 
@@ -48,7 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsernameAndDeletedFalse(username);
+        log.debug("Retrieving user by username '{}'", username);
+        return userRepository.findByUsernameAndDeletedFalse(username)
+                .orElseThrow(() -> new NotFoundException(format("User with username '%s' not found", username)));
     }
 }
 

@@ -19,15 +19,14 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public List<Contact> getAllContacts() {
-        return (List<Contact>) contactRepository.findAll();
+        return contactRepository.findAllByDeletedFalse();
     }
 
     @Override
     public Contact getContactById(Integer id) {
         return contactRepository
                 .findById(id)
-                .get();
-//                .orElseThrow(new NotFoundException(format("Contact with id '%s' not found", id)));
+                .orElseThrow(() -> new NotFoundException(format("Contact with id '%s' not found", id)));
     }
 
     @Override
