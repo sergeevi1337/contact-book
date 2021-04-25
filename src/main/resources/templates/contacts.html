@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ua"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="~{fragments/head :: head(~{::meta})}">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+	<div class="content-wrapper">
+        <nav>
+            <h1>Контакти</h1>
+            <ul>
+                <li sec:authorize="hasAnyAuthority('ADMIN')"><a class="btn btn-primary" th:href="@{/contacts/add}" role="button"><i class="fas fa-plus"></i>Додати</a></li>
+                <li sec:authorize="hasAnyAuthority('ADMIN')"><a class="btn btn-primary" th:href="@{/users}" role="button"><i class="fas fa-user-cog"></i>Користувачі</a></li>
+                <li sec:authorize="hasAnyAuthority('USER', 'ADMIN')"><a class="btn btn-primary" th:href="@{/contacts/print}" role="button"><i class="fas fa-print"></i>Роздрукувати</a></li>
+                <li sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-sign-out"></i>Вихід</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+        <div class="card-deck">
+            <div class="card" th:each="contact : ${contacts}">
+                <img th:unless="${contact.pathToPhoto == null}" class="card-img-top" th:with="path=${contact.pathToPhoto}" th:src="${parser.parse(path)}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 th:if="${contact.lastName == null || contact.lastName.isEmpty()}" class="card-title" th:text="${contact.firstName}"></h5>
+                    <h5 th:unless="${contact.lastName == null || contact.lastName.isEmpty()}" class="card-title" th:text="${contact.firstName} + ' ' + ${contact.lastName}"></h5>
+                    <p class="card-text" th:text="${contact.email}"></p>
+                </div>
+                <div class="card-footer" sec:authorize="hasAnyAuthority('ADMIN')">
+                    <ul>
+                        <li><a th:href="@{/contacts/edit/{id}(id=${contact.id})}"><i class="fas fa-edit"></i></a></li>
+                        <li><a th:href="@{/contacts/delete/{id}(id=${contact.id})}"><i class="fas fa-trash-alt"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+body {
+    background-image: url("/static/img/background.png");
+    background-repeat: repeat;
+}
+
+.login-form-wrapper {
+    position: relative;
+    width: 250px;
+    margin: 0 auto;
+    margin-top: 30vh;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+}
+
+.content-wrapper {
+    min-height: 100px;
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 20vh;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+}
+
+nav {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+nav h1 {
+    float: left;
+}
+
+nav ul {
+    float: right;
+}
+
+nav ul li {
+    float: left;
+    margin-left: 10px;
+}
+
+nav .btn > i {
+    margin-right: 5px;
+}
+
+.card-footer ul {
+    float: right;
+}
+
+.card-footer ul li {
+    float: left;
+    margin-right: 10px;
+}
+
+.form-buttons ul {
+    float: right;
+}
+
+.form-buttons ul li {
+    float: left;
+    margin-right: 10px;
+}
+
+.form-buttons {
+    overflow: hidden;
+}
+
+.form-buttons .btn > i {
+    margin-right: 5px;
+}

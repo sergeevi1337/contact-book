@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 
 @Slf4j
-@Component
+//@Component
 @AllArgsConstructor
 public class CommandLineAppStartupRunner implements CommandLineRunner {
 

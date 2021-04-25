@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ua"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(~{::meta})}">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+	<div class="content-wrapper">
+        <nav>
+            <h1>Новий контакт:</h1>
+            <ul>
+                <li>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-sign-out"></i>Вихід</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+		<form method="post" th:action="@{/contacts/add}" enctype="multipart/form-data" th:object="${contact}">
+            <input type="hidden" name="id" th:field="*{id}">
+            <div class="form-group mt-3" th:with="error=${#fields.hasErrors('phoneNumber')}">
+                <label class="field-title" for="phoneNumber">Номер</label>
+                <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}">
+                <small th:unless="${error}" class="form-text text-muted">Обов'язкове поле</small>
+                <div th:if="${error}" th:errors="*{phoneNumber}" class="alert alert-danger mt-1" role="alert"></div>
+            </div>
+            <div class="form-group mt-3" th:with="error=${#fields.hasErrors('firstName')}">
+                <label class="field-title" for="firstName">Ім'я</label>
+                <input type="text" class="form-control" id="firstName" th:field="*{firstName}">
+                <small th:unless="${error}" class="form-text text-muted">Обов'язкове поле</small>
+                <div th:if="${error}" th:errors="*{firstName}" class="alert alert-danger mt-1" role="alert"></div>
+            </div>
+            <div class="form-group mt-3" th:with="error=${#fields.hasErrors('lastName')}">
+                <label class="field-title" for="lastName">Прізвище</label>
+                <input type="text" class="form-control" id="lastName" th:field="*{lastName}">
+                <div th:if="${error}" th:errors="*{lastName}" class="alert alert-danger mt-1" role="alert"></div>
+            </div>
+            <div class="form-group mt-3" th:with="error=${#fields.hasErrors('email')}">
+                <label class="field-title" for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" th:field="*{email}">
+                <div th:if="${error}" th:errors="*{email}" class="alert alert-danger mt-1" role="alert"></div>
+            </div>
+            <div class="form-group mt-3" th:with="error=${#fields.hasErrors('pathToPhoto')}">
+                <label class="field-title" for="image">Фото</label>
+                <textarea class="form-control" id="image" th:field="*{pathToPhoto}"></textarea>
+                <div th:if="${error}" th:errors="*{pathToPhoto}" class="alert alert-danger mt-1" role="alert"></div>
+            </div>
+            <div class="form-buttons">
+                <ul>
+                    <li><button type="submit" class="btn btn-success"><i class="fas fa-save"></i>Зберегти</button></li>
+                    <li><a class="btn btn-primary" th:href="@{/contacts}" role="button"><i class="fas fa-chevron-left"></i>Повернутися</a></li>
+                </ul>
+            </div>
+        </form>
+	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/static/js/ckeditor/build/ckeditor.js"></script>
+    <script type="text/javascript" src="/static/js/init.js"></script>
+</body>
+</html>
