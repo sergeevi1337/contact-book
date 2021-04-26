@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fontFamilies>
+   <fontFamily name="GT Eesti Pro Display Light">
+       <normal><![CDATA[reports/fonts/eesti/GTEestiProDisplay-Light.ttf]]></normal>
+       <bold><![CDATA[reports/fonts/eesti/GTEestiProDisplay-Bold.ttf]]></bold>
+       <pdfEncoding><![CDATA[Cp1251]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <exportFonts/>
+   </fontFamily>
+</fontFamilies>

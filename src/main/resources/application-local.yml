@@ -29,4 +29,6 @@ logging:
     com.university.contactbook: DEBUG
 
 upload:
-  path: /C:/Users/Igor/Desktop/upload
+  path: /C:/Users/Dmitriy/Desktop/upload
+reports:
+  path: /C:/Users/Dmitriy/Desktop/reports
