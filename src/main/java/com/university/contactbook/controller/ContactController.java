@@ -2,9 +2,16 @@ package com.university.contactbook.controller;
 
 import com.university.contactbook.entity.Contact;
 import com.university.contactbook.service.ContactService;
+import com.university.contactbook.service.ReportService;
 import com.university.contactbook.utils.CKEditorResultHtmlParser;
+import com.university.contactbook.utils.enums.ReportFormat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jasperreports.engine.JRException;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +21,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -22,6 +33,7 @@ import java.util.List;
 @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 public class ContactController {
 
+    private final ReportService reportService;
     private final ContactService contactService;
 
     @GetMapping("/")
@@ -88,8 +100,17 @@ public class ContactController {
         return "redirect:/contacts";
     }
 
-    @GetMapping("/print")
-    public String print() {
-        return "contacts";
+    @GetMapping("/contacts/print")
+    public ResponseEntity<InputStreamResource> print() throws IOException, JRException {
+        File file = reportService.exportReport(ReportFormat.PDF);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline;filename=" + file.getName());
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/pdf"))
+                .body(resource);
     }
 }
