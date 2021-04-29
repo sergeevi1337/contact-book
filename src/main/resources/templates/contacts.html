@@ -21,13 +21,17 @@
                 </li>
             </ul>
         </nav>
-        <div class="card-deck">
+        <div class="empty-page-text" th:if="${contacts.size() == 0}">
+            <h1>Записів не знайдено!</h1>
+        </div>
+        <div class="card-columns" th:unless="${contacts.size() == 0}">
             <div class="card" th:each="contact : ${contacts}">
-                <img th:unless="${contact.pathToPhoto == null}" class="card-img-top" th:with="path=${contact.pathToPhoto}" th:src="${parser.parse(path)}" alt="Card image cap">
+                <img th:unless="${contact.pathToPhoto == null || contact.pathToPhoto.isEmpty()}" class="card-img-top" th:with="path=${contact.pathToPhoto}" th:src="${parser.parse(path)}" alt="Card image cap">
                 <div class="card-body">
+                    <h4><a th:href="@{'tel:' + ${contact.phoneNumber}}" th:text="${contact.phoneNumber}"></a></h4>
                     <h5 th:if="${contact.lastName == null || contact.lastName.isEmpty()}" class="card-title" th:text="${contact.firstName}"></h5>
                     <h5 th:unless="${contact.lastName == null || contact.lastName.isEmpty()}" class="card-title" th:text="${contact.firstName} + ' ' + ${contact.lastName}"></h5>
-                    <p class="card-text" th:text="${contact.email}"></p>
+                    <p th:unless="${contact.lastName == null || contact.lastName.isEmpty()}" class="card-text" th:text="${contact.email}"></p>
                 </div>
                 <div class="card-footer" sec:authorize="hasAnyAuthority('ADMIN')">
                     <ul>

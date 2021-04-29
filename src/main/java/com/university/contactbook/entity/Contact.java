@@ -41,7 +41,7 @@ public class Contact {
     @Column(name = "email")
     private String email;
 
-    @Size(max = 512, message = "Перевищено максимальну довжину тексту! (512 символів)")
+    @Size(max = 256, message = "Перевищено максимальну довжину тексту! (256 символів)")
     @Column(name = "path_to_photo")
     private String pathToPhoto;
 

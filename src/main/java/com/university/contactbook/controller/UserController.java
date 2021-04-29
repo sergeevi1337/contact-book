@@ -2,6 +2,7 @@ package com.university.contactbook.controller;
 
 import com.university.contactbook.entity.User;
 import com.university.contactbook.service.UserService;
+import com.university.contactbook.service.UserValidationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,6 +28,7 @@ public class UserController {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final UserValidationService userValidationService;
 
     @GetMapping("")
     public String openUsersPage(Model model) {
@@ -43,6 +45,8 @@ public class UserController {
 
     @PostMapping("/add")
     public String createNewUser(@Valid User user, BindingResult bindingResult) {
+        userValidationService.isUniqueUsername(user, bindingResult);
+
         if (bindingResult.hasErrors()) {
             log.error("While creating new user was detected {} validation errors", bindingResult.getFieldErrorCount());
             return "user-creation-page";

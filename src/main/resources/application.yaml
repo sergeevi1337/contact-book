@@ -26,3 +26,5 @@ spring:
 
 upload:
   path: /home/ubuntu/upload
+reports:
+  path: /home/ubuntu/reports

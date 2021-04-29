@@ -2,6 +2,7 @@ package com.university.contactbook.config;
 
 import com.university.contactbook.entity.Role;
 import com.university.contactbook.entity.User;
+import com.university.contactbook.repository.UserRepository;
 import com.university.contactbook.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +13,11 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 
 @Slf4j
-//@Component
+@Component
 @AllArgsConstructor
 public class CommandLineAppStartupRunner implements CommandLineRunner {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -28,8 +29,12 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
                 .active(true)
                 .build();
 
-        defaultAdmin = userService.createNewUser(defaultAdmin);
-        log.debug("Initialized default admin user = {}", defaultAdmin);
+        boolean exist = userRepository.existsByUsernameAndDeletedFalse(defaultAdmin.getUsername());
+
+        if (!exist) {
+            defaultAdmin = userRepository.save(defaultAdmin);
+            log.debug("Initialized default admin user = {}", defaultAdmin);
+        }
     }
 }
 

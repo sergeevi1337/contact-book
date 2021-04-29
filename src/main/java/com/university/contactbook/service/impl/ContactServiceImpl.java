@@ -5,12 +5,15 @@ import com.university.contactbook.repository.ContactRepository;
 import com.university.contactbook.service.ContactService;
 import com.university.contactbook.utils.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ContactServiceImpl implements ContactService {
@@ -45,5 +48,16 @@ public class ContactServiceImpl implements ContactService {
         contact.setDeleted(true);
 
         contactRepository.save(contact);
+    }
+
+    @Override
+    public boolean isContactExistByPhoneNumber(String phoneNumber) {
+        return contactRepository.existsByPhoneNumberAndDeletedFalse(phoneNumber);
+    }
+
+    @Override
+    public Contact getContactByPhoneNumber(String phoneNumber) {
+        return contactRepository.findByPhoneNumberAndDeletedFalse(phoneNumber)
+                .orElseThrow(() -> new NotFoundException(format("Contact with phone number '%s' not found", phoneNumber)));
     }
 }

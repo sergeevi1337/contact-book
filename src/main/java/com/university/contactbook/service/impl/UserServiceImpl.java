@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -50,6 +49,11 @@ public class UserServiceImpl implements UserService {
         user.setDeleted(true);
 
         userRepository.save(user);
+    }
+
+    @Override
+    public boolean isUserExistByUsername(String username) {
+        return userRepository.existsByUsernameAndDeletedFalse(username);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.university.contactbook.controller;
 
 import com.university.contactbook.entity.Contact;
 import com.university.contactbook.service.ContactService;
+import com.university.contactbook.service.ContactValidationService;
 import com.university.contactbook.service.ReportService;
 import com.university.contactbook.utils.CKEditorResultHtmlParser;
 import com.university.contactbook.utils.enums.ReportFormat;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -35,6 +35,7 @@ public class ContactController {
 
     private final ReportService reportService;
     private final ContactService contactService;
+    private final ContactValidationService contactValidationService;
 
     @GetMapping("/")
     public String openContactsPage() {
@@ -59,6 +60,8 @@ public class ContactController {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/contacts/add")
     public String createNewContact(@Valid Contact contact, BindingResult bindingResult) {
+        contactValidationService.isUniquePhoneNumber(contact, bindingResult);
+
         if (bindingResult.hasErrors()) {
             log.error("While creating new contact was detected {} validation errors", bindingResult.getFieldErrorCount());
             return "contact-creation-page";
@@ -81,6 +84,8 @@ public class ContactController {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/contacts/edit/{id}")
     public String editContact(@Valid Contact contact, BindingResult bindingResult) {
+        contactValidationService.isUniquePhoneNumber(contact, bindingResult);
+
         if (bindingResult.hasErrors()) {
             log.error("While editing contact was detected {} validation errors", bindingResult.getFieldErrorCount());
             return "contact-editing-page";
@@ -110,7 +115,7 @@ public class ContactController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(file.length())
-                .contentType(MediaType.parseMediaType("application/pdf"))
+                .contentType(MediaType.APPLICATION_PDF)
                 .body(resource);
     }
 }
