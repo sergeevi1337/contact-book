@@ -1,16 +1,16 @@
 package com.university.contactbook.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.util.StringUtils;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CKEditorResultHtmlParser {
 
     private static CKEditorResultHtmlParser instance;
-
-    private CKEditorResultHtmlParser() {
-    }
 
     public synchronized static CKEditorResultHtmlParser getInstance() {
         if (instance == null) {

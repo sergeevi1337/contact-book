@@ -1,6 +1,7 @@
 body {
     background-image: url("/static/img/background.png");
     background-repeat: repeat;
+    margin-bottom: 40px;
 }
 
 .login-form-wrapper {
@@ -15,7 +16,7 @@ body {
 }
 
 .content-wrapper {
-    min-height: 100px;
+    min-height: 200px;
     width: 1200px;
     margin: 0 auto;
     margin-top: 20vh;
@@ -29,6 +30,7 @@ nav {
     position: relative;
     overflow: hidden;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 nav h1 {
@@ -72,4 +74,20 @@ nav .btn > i {
 
 .form-buttons .btn > i {
     margin-right: 5px;
+}
+
+.empty-page-text {
+    text-align: center;
+}
+
+.error-block {
+    position: relative;
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 30vh;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+    text-align: center;
 }

@@ -14,4 +14,6 @@ public interface UserService extends UserDetailsService {
     User createNewUser(User user);
 
     void deleteUserById(Integer id);
+
+    boolean isUserExistByUsername(String username);
 }

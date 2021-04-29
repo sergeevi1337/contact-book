@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="ua"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(_)}"></head>
+<body>
+    <div class="error-block">
+        <h1>Упс... Щось пішло не так!</h1>
+        <p th:text="${errorMessage}"></p>
+    </div>
+</body>
+</html>

@@ -29,7 +29,7 @@
             <tbody>
                 <tr th:each="user : ${users}">
                     <td scope="row" th:text="${user.username}"></td>
-                    <td th:if="${#authentication.getPrincipal().getId() != user.id}"><a th:href="@{/users/delete/{id}(id=${user.id})}"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><a th:if="${#authentication.getPrincipal().getId() != user.id}" th:href="@{/users/delete/{id}(id=${user.id})}"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
             </tbody>
         </table>

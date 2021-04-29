@@ -3,6 +3,7 @@ package com.university.contactbook.service;
 import com.university.contactbook.entity.Contact;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ContactService {
 
@@ -15,4 +16,8 @@ public interface ContactService {
     Contact editContact(Contact contact);
 
     void deleteContactById(Integer id);
+
+    boolean isContactExistByPhoneNumber(String phoneNumber);
+
+    Contact getContactByPhoneNumber(String phoneNumber);
 }
