@@ -3,7 +3,7 @@ spring:
     name: contact-book
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/contact_book
+    url: jdbc:postgresql://contact-book.cjp8wcihhtti.us-east-2.rds.amazonaws.com/contact_book
     driver-class-name: org.postgresql.Driver
     username: contacts_db
     password: contacts_db
@@ -14,7 +14,7 @@ spring:
         default_schema: contacts
 
   flyway:
-    url: jdbc:postgresql://localhost:5432/contact_book
+    url: jdbc:postgresql://contact-book.cjp8wcihhtti.us-east-2.rds.amazonaws.com/contact_book
     schemas: contacts
     user: contacts_db
     password: contacts_db

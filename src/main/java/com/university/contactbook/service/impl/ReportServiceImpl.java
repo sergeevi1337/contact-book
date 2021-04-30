@@ -9,11 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class ReportServiceImpl implements ReportService {
     private final ContactRepository contactRepository;
 
     @Override
-    public File exportReport(ReportFormat format) throws FileNotFoundException, JRException {
+    public File exportReport(ReportFormat format) throws IOException, JRException {
         String destinationFilePath;
         File rootUploadDir = new File(reportsPath);
 
@@ -39,8 +40,8 @@ public class ReportServiceImpl implements ReportService {
 
         List<Contact> contacts = contactRepository.findAllByDeletedFalse();
 
-        File file = ResourceUtils.getFile("classpath:reports/contacts.jrxml");
-        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        InputStream inputStream = new ClassPathResource("reports/contacts.jrxml").getInputStream();
+        JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(contacts);
 
         Map<String, Object> parameters = new HashMap<>();
