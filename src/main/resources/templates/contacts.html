@@ -13,7 +13,7 @@
             <ul>
                 <li sec:authorize="hasAnyAuthority('ADMIN')"><a class="btn btn-primary" th:href="@{/contacts/add}" role="button"><i class="fas fa-plus"></i>Додати</a></li>
                 <li sec:authorize="hasAnyAuthority('ADMIN')"><a class="btn btn-primary" th:href="@{/users}" role="button"><i class="fas fa-user-cog"></i>Користувачі</a></li>
-                <li sec:authorize="hasAnyAuthority('USER', 'ADMIN')"><a class="btn btn-primary" th:href="@{/contacts/print}" role="button"><i class="fas fa-print"></i>Роздрукувати</a></li>
+                <li sec:authorize="hasAnyAuthority('USER', 'ADMIN')"><a class="btn btn-primary" th:href="@{/contacts/print}" target="_blank" role="button"><i class="fas fa-print"></i>Роздрукувати</a></li>
                 <li sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
                     <form th:action="@{/logout}" method="post">
                         <button type="submit" class="btn btn-danger"><i class="fa fa-sign-out"></i>Вихід</button>
