@@ -4,8 +4,7 @@ CREATE TABLE usr
     username    VARCHAR(64),
     password    VARCHAR(64),
     active      boolean,
-    deleted     boolean,
-    UNIQUE (username)
+    deleted     boolean
 );
 
 CREATE TABLE user_role
@@ -22,7 +21,6 @@ CREATE TABLE contacts
     phone_number  VARCHAR(255),
     email         VARCHAR(255),
     path_to_photo VARCHAR(512),
-    deleted       boolean,
-    UNIQUE (phone_number)
+    deleted       boolean
 );
 

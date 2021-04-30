@@ -3,7 +3,6 @@ package com.university.contactbook.config;
 import com.university.contactbook.entity.Role;
 import com.university.contactbook.entity.User;
 import com.university.contactbook.repository.UserRepository;
-import com.university.contactbook.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;

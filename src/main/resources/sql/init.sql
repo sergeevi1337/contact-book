@@ -14,4 +14,4 @@ GRANT CONNECT ON DATABASE contact_book TO contacts_db;
 CREATE SCHEMA contacts;
 
 -- ACCESS TO SCHEMAS
-GRANT USAGE ON SCHEMA contacts TO contacts_db;
+GRANT ALL ON SCHEMA contacts TO contacts_db;
